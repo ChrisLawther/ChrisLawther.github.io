@@ -1,5 +1,5 @@
 ---
-layout: post
+# layout: post
 title:  "Making DecodableError more readable"
 date:   2024-08-06 21:55:52 +0100
 categories: swift ios macos

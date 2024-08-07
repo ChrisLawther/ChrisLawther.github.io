@@ -1,5 +1,5 @@
 ---
-layout: post
+# layout: post
 title:  "Installing Jekyll"
 date:   2024-08-06 21:55:52 +0100
 categories: macos jekyll github
