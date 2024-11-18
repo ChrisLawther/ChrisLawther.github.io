@@ -71,7 +71,7 @@ app.launch()
 
 ## Next steps
 
-That has the original points 1, 3 and 4 covered. An addition to cover point 2 may feature in a future article...
+That has the original points 1, 3 and 4 covered. For point #2, we'll need another way to influence the app if we want it to target a different environment for internal stake-holders, or perhaps apply some other configuration change, all while sticking to a single build. Perhaps in a future article...
 
 ## Final thoughts
 
