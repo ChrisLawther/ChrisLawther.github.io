@@ -28,7 +28,7 @@ twitter_username: jekyllrb
 github_username:  jekyll
 
 # Build settings
-theme: cayman
+theme: jekyll-theme-cayman
 # theme: tactile
 # remote_theme: pages-themes/tactile@v0.2.0
 plugins:
