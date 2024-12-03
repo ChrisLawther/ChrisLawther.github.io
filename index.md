@@ -9,3 +9,7 @@ An occassional series of writings, generally falling into one of 2 categories:
 
  1. Recurring things that happen infrequently enough that I've had time to forget how to do them since last time.
  1. Something code-related.
+
+<hr/>
+
+Most recent post:
