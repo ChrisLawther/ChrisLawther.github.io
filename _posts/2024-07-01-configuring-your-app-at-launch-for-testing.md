@@ -1,11 +1,16 @@
 ---
-# layout: post
+layout: post
 title:  "Configuring your app at launch"
-date:   2024-08-06 21:55:52 +0100
+date:   2024-07-01 12:00:00 +0100
 categories: ios swift testing testability
+excerpt_separator: <!--more-->
 ---
 
-For a few reasons, we sometimes want to be able to control where our app gets its data from:
+For a few reasons, we sometimes want to be able to control where our app gets its data from. One common (but inconvenient!) solution is to use `#ifdef DEBUG` directives. There's a better way...
+
+<!--more-->
+
+Scenarios we might want to cater for include:
 
  1. Production for public users
  1. A staging environment to allow stake-holders to see how the app handles changes before they go to production
@@ -18,7 +23,7 @@ Two features of `UserDefaults` (one of them not widely known) help us to achieve
 
 ### Default values
 
-UserDefaults has an API for registering default ephemeral values (i.e. they can be read, but they're never persisted). These values will be returned by `valueForKey:` as long as no other value has ever been set. This means you can define and apply sensible defaults for your app in a single place, rather than at point of use.
+UserDefaults has an API for registering default ephemeral values (i.e. they can be read, but they're never persisted). These values will be returned by `valueForKey:`, unless the app has written a different value since launch. This means you can define and apply sensible defaults for your app in a single place, rather than at point of use.
 
 ### Command line overrides
 
@@ -30,7 +35,7 @@ For example, passing the command line arguments `-foo` and `bar` would cause `Us
 
 ### In the app
 
-For normal operation, so that everything works as intended for Joe Public, we need to ensure that all of the required default values exist.
+For normal operation, so that everything works as intended for Joe Public, we need to ensure that all of the required default values always exist.
 
 Early on in the app's life-cycle (i.e. before anything *reads* `UserDefaults`), register your default values, passing a dictionary of `[String: Any]`:
 
@@ -46,7 +51,7 @@ UserDefaults.standard.register(defaults: [
 
 For day-to-day development, we may wish (or be required) to work against something other than the production environment.
 
-In Product → Scheme → Edit Scheme (`⌘ <`, which on my keyboard at least is achieved by `⌘ Shift ,`), select "Run" from the sidebar and then the "Arguments" tab. Add two arguments to "Arguments Passed on Launch" for each variable you want to override. Set the value for the first in each pair to the `UserDefaults` key prefixed with a single `-` and set the second value to the desired value.
+In Product → Scheme → Edit Scheme (`⌘ <`, which on my UK keyboard is achieved by `⌘ Shift ,`), select "Run" from the sidebar and then the "Arguments" tab. Add two arguments to "Arguments Passed on Launch" for each variable you want to override. Set the value for the first in each pair to the `UserDefaults` key prefixed with a single `-` and set the second value to the desired value.
 
 For example, to set `baseURL` to `"https://staging.myapp.com/api"` you would need these as two consecutive arguments:
 
@@ -60,8 +65,7 @@ You might want a UITest to be able to control the data the app is operating on, 
 {% highlight swift %}
 let app = XCUIApplication()
 app.launchArguments = [
-	"-foo", "bar",
-	"-someBoolean", true,
+	"-someBoolean", false,
 	"-baseURL", "http://localhost:3000"
 ]
 app.launch()
@@ -71,8 +75,8 @@ app.launch()
 
 ## Next steps
 
-That has the original points 1, 3 and 4 covered. For point #2, we'll need another way to influence the app if we want it to target a different environment for internal stake-holders, or perhaps apply some other configuration change, all while sticking to a single build. Perhaps in a future article...
+That has the original points 1, 3 and 4 covered. For point #2, we'll need another way to influence the app if we want it to target a different environment for internal stake-holders or perhaps apply some other configuration change, all while sticking to a single build. Perhaps in a future article...
 
 ## Final thoughts
 
-I've yet to encounter anybody using this approach. Maybe it's deeply flawed, or there's a a better way?
+I've yet to encounter anybody using this approach. Maybe there's a hideous flaw I just haven't noticed, or perhaps there's a a better way?
