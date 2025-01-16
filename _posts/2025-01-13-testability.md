@@ -83,7 +83,7 @@ let responseData = """
       {
         "episode": "https://some.podcast/some/episode.mp3",
         "title": "The very first episode",
-        "published": ""
+        "published": "Mon, 10 Jan 2025 13:00:00 GMT"
       }
     ]
     """.data(using: .utf8)!
